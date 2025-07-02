@@ -2,12 +2,25 @@ import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 
+type TBun = {
+  price: number;
+  name: string;
+  image: string;
+};
+
+type TConstructorItem = {
+  bun: undefined | null | TBun;
+  ingredients: [];
+};
+
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const constructorItems = {
+  const constructorItems: TConstructorItem = {
+    bun: null,
+    /*
     bun: {
       price: 0
-    },
+    },*/
     ingredients: []
   };
 
@@ -30,7 +43,7 @@ export const BurgerConstructor: FC = () => {
     [constructorItems]
   );
 
-  return null;
+  // return null;
 
   return (
     <BurgerConstructorUI
