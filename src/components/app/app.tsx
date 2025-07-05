@@ -13,7 +13,13 @@ import '../../index.css';
 import styles from './app.module.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { AppHeader, Modal, OrderInfo, IngredientDetails } from '@components';
+import {
+  AppHeader,
+  Modal,
+  OrderInfo,
+  IngredientDetails,
+  ProtectedRoute
+} from '@components';
 
 const App = () => (
   <BrowserRouter>
@@ -27,8 +33,10 @@ const App = () => (
         <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/profile/orders' element={<ProfileOrders />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/orders' element={<ProfileOrders />} />
+        </Route>
         <Route path='*' element={<NotFound404 />} />
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
