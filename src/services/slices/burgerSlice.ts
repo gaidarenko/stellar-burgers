@@ -1,20 +1,36 @@
 import {
   TIngredient,
   TConstructorIngredient,
-  TConstructorItems
+  TConstructorItems,
+  TOrder
 } from '@utils-types';
-import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  nanoid,
+  PayloadAction
+} from '@reduxjs/toolkit';
+import { orderBurgerApi } from '@api';
 
 type TBurgerState = {
   constructorItems: TConstructorItems;
+  orderRequest: boolean;
+  order: TOrder | null;
 };
 
 const initialState: TBurgerState = {
   constructorItems: {
     bun: null,
     ingredients: []
-  }
+  },
+  orderRequest: false,
+  order: null
 };
+
+export const orderBurger = createAsyncThunk(
+  'burger/order',
+  async (data: string[]) => orderBurgerApi(data)
+);
 
 export const burgerSlice = createSlice({
   name: 'burger',
@@ -38,12 +54,34 @@ export const burgerSlice = createSlice({
         state.constructorItems.ingredients.filter(
           (i) => i.id !== action.payload
         );
+    },
+    clearOrder: (state) => {
+      state.order = null;
     }
   },
   selectors: {
-    selectConstructorItems: (state) => state.constructorItems
+    selectConstructorItems: (state) => state.constructorItems,
+    selectOrderRequest: (state) => state.orderRequest,
+    selectOrder: (state) => state.order
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(orderBurger.pending, (state) => {
+        state.orderRequest = true;
+      })
+      .addCase(orderBurger.rejected, (state) => {
+        state.orderRequest = false;
+      })
+      .addCase(orderBurger.fulfilled, (state, action) => {
+        state.orderRequest = false;
+        state.order = action.payload.order;
+        state.constructorItems.bun = null;
+        state.constructorItems.ingredients = [];
+      });
   }
 });
 
-export const { addIngredient, removeIngredient } = burgerSlice.actions;
-export const { selectConstructorItems } = burgerSlice.selectors;
+export const { addIngredient, removeIngredient, clearOrder } =
+  burgerSlice.actions;
+export const { selectConstructorItems, selectOrderRequest, selectOrder } =
+  burgerSlice.selectors;
