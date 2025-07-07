@@ -1,16 +1,30 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from '@store';
+import { TUser } from '@utils-types';
+import {
+  fetchUser,
+  updateUser,
+  selectUser,
+  selectUserIsLoading
+} from '@slices';
+import { Preloader } from '@ui';
+import { Navigate } from 'react-router-dom';
+import { TRegisterData } from '@api';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
-  const user = {
-    name: '',
-    email: ''
-  };
+  const user: TUser | null = useSelector<TUser | null>(selectUser);
+  const isLoading: boolean = useSelector<boolean>(selectUserIsLoading);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
 
   const [formValue, setFormValue] = useState({
-    name: user.name,
-    email: user.email,
+    name: user?.name || '',
+    email: user?.email || '',
     password: ''
   });
 
@@ -29,13 +43,28 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    const newUser: Partial<TRegisterData> = {};
+
+    if (formValue.name !== user?.name) {
+      newUser.name = formValue.name;
+    }
+
+    if (formValue.email !== user?.email) {
+      newUser.email = formValue.email;
+    }
+
+    if (formValue.password) {
+      newUser.password = formValue.password;
+    }
+
+    dispatch(updateUser(newUser));
   };
 
   const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
     setFormValue({
-      name: user.name,
-      email: user.email,
+      name: user?.name || '',
+      email: user?.email || '',
       password: ''
     });
   };
@@ -46,6 +75,14 @@ export const Profile: FC = () => {
       [e.target.name]: e.target.value
     }));
   };
+
+  if (isLoading) {
+    return <Preloader />;
+  }
+
+  if (!user) {
+    return <Navigate to='/' />;
+  }
 
   return (
     <ProfileUI

@@ -5,7 +5,9 @@ import {
   TLoginData,
   registerUserApi,
   TRegisterData,
-  logoutApi
+  logoutApi,
+  getUserApi,
+  updateUserApi
 } from '@api';
 import { setCookie, deleteCookie } from '../../utils/cookie';
 
@@ -18,6 +20,8 @@ const initialState: TUserState = {
   user: null,
   isLoading: false
 };
+
+export const fetchUser = createAsyncThunk('user/get', async () => getUserApi());
 
 export const loginUser = createAsyncThunk(
   'user/login',
@@ -78,6 +82,23 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  'user/update',
+  async (registerData: Partial<TRegisterData>, { rejectWithValue }) => {
+    try {
+      const res = await updateUserApi(registerData);
+
+      if (!res?.success) {
+        return rejectWithValue(res);
+      }
+
+      return res.user;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -95,7 +116,6 @@ export const userSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
         state.user = action.payload;
       })
@@ -118,6 +138,26 @@ export const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = null;
+      })
+      .addCase(fetchUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUser.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
       });
   }
 });

@@ -10,7 +10,6 @@ import { selectIngredients } from '@slices';
 export const BurgerIngredients: FC = () => {
   const ingredients = useSelector<TIngredient[]>(selectIngredients);
 
-  /** TODO: взять переменные из стора */
   const buns: TIngredient[] = ingredients.filter((i) => i.type === 'bun');
   const mains: TIngredient[] = ingredients.filter((i) => i.type === 'main');
   const sauces: TIngredient[] = ingredients.filter((i) => i.type === 'sauce');

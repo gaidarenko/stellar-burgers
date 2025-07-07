@@ -14,6 +14,8 @@ export const Feed: FC = () => {
 
   const orders: TOrder[] = useSelector<TOrder[]>(selectFeeds);
 
+  console.log(orders);
+
   if (!orders.length) {
     return <Preloader />;
   }

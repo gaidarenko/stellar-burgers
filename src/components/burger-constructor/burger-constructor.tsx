@@ -16,7 +16,7 @@ import {
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
+
   const constructorItems: TConstructorItems = useSelector<TConstructorItems>(
     selectConstructorItems
   );
