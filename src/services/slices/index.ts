@@ -1,4 +1,4 @@
 export * from './userSlice';
 export * from './ingredientSlice';
-export * from './feedSlice';
-export * from './burgerSlice';
+export * from './orderSlice';
+export * from './constructorSlice';

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '@store';
 import {
   selectIngredients,
-  selectFeeds,
+  selectOrders,
   getOrderByNumber,
   fetchIngredients
 } from '@slices';
@@ -22,7 +22,7 @@ export const OrderInfo: FC = () => {
     }
   }, []);
 
-  const orders: TOrder[] = useSelector<TOrder[]>(selectFeeds);
+  const orders: TOrder[] = useSelector<TOrder[]>(selectOrders);
 
   const orderData: TOrder | undefined = orders.find(
     (o) => o.number.toString() === number

@@ -12,13 +12,13 @@ import {
 } from '@reduxjs/toolkit';
 import { orderBurgerApi } from '@api';
 
-type TBurgerState = {
+type TConstructorState = {
   constructorItems: TConstructorItems;
   orderRequest: boolean;
   order: TOrder | null;
 };
 
-const initialState: TBurgerState = {
+const initialState: TConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
@@ -32,8 +32,8 @@ export const orderBurger = createAsyncThunk(
   async (data: string[]) => orderBurgerApi(data)
 );
 
-export const burgerSlice = createSlice({
-  name: 'burger',
+export const constructorSlice = createSlice({
+  name: 'burgerConstructor',
   initialState,
   reducers: {
     addIngredient: {
@@ -82,6 +82,6 @@ export const burgerSlice = createSlice({
 });
 
 export const { addIngredient, removeIngredient, clearOrder } =
-  burgerSlice.actions;
+  constructorSlice.actions;
 export const { selectConstructorItems, selectOrderRequest, selectOrder } =
-  burgerSlice.selectors;
+  constructorSlice.selectors;

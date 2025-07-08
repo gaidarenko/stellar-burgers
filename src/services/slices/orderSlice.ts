@@ -2,27 +2,29 @@ import { TOrder } from '@utils-types';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getFeedsApi, getOrdersApi, getOrderByNumberApi } from '@api';
 
-type TFeedsState = {
+type TOrderState = {
   userOrders: Array<TOrder>;
+  feeds: Array<TOrder>;
   orders: Array<TOrder>;
   isLoading: boolean;
   total: number;
   totalToday: number;
 };
 
-const initialState: TFeedsState = {
+const initialState: TOrderState = {
   userOrders: [],
+  feeds: [],
   orders: [],
   isLoading: false,
   total: 0,
   totalToday: 0
 };
 
-export const fetchFeeds = createAsyncThunk('feeds/getAll', async () =>
+export const fetchFeeds = createAsyncThunk('order/getAll', async () =>
   getFeedsApi()
 );
 
-export const fetchOrders = createAsyncThunk('user/getOrders', async () =>
+export const fetchOrders = createAsyncThunk('order/getUserOrders', async () =>
   getOrdersApi()
 );
 
@@ -31,13 +33,14 @@ export const getOrderByNumber = createAsyncThunk(
   async (number: number) => getOrderByNumberApi(number)
 );
 
-export const feedSlice = createSlice({
-  name: 'feed',
+export const orderSlice = createSlice({
+  name: 'order',
   initialState,
   reducers: {},
   selectors: {
     selectUserOrders: (state) => state.userOrders,
-    selectFeeds: (state) => state.orders,
+    selectOrders: (state) => state.orders,
+    selectFeeds: (state) => state.feeds,
     selectFeedIsLoading: (state) => state.isLoading,
     selectFeedTotal: (state) => state.total,
     selectFeedTotalToday: (state) => state.totalToday
@@ -52,7 +55,7 @@ export const feedSlice = createSlice({
       })
       .addCase(fetchFeeds.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.orders = action.payload.orders;
+        state.feeds = action.payload.orders;
         state.total = action.payload.total;
         state.totalToday = action.payload.totalToday;
       })
@@ -80,9 +83,10 @@ export const feedSlice = createSlice({
 });
 
 export const {
+  selectOrders,
   selectUserOrders,
   selectFeeds,
   selectFeedIsLoading,
   selectFeedTotal,
   selectFeedTotalToday
-} = feedSlice.selectors;
+} = orderSlice.selectors;

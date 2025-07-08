@@ -11,7 +11,7 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
 
 import {
   AppHeader,
@@ -23,9 +23,12 @@ import {
 
 const App = () => {
   const location = useLocation();
-  const backgroundLocation = location.state?.backgroundLocation;
+  const navigate = useNavigate();
+  const backgroundLocation = location.state?.background;
 
-  const onClose = () => {};
+  const onClose = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.app}>
@@ -53,7 +56,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='Title' onClose={onClose}>
+              <Modal title='' onClose={onClose}>
                 <OrderInfo />
               </Modal>
             }
@@ -61,8 +64,16 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Title' onClose={onClose}>
+              <Modal title='Детали ингредиента' onClose={onClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal title='' onClose={onClose}>
+                <OrderInfo />
               </Modal>
             }
           />

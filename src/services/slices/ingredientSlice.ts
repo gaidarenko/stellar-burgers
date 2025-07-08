@@ -18,7 +18,7 @@ export const fetchIngredients = createAsyncThunk(
 );
 
 export const ingredientSlice = createSlice({
-  name: 'ingradient',
+  name: 'ingredient',
   initialState,
   reducers: {},
   selectors: {

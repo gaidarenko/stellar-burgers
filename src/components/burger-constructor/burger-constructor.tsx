@@ -11,10 +11,14 @@ import {
   selectOrderRequest,
   selectOrder,
   orderBurger,
-  clearOrder
+  clearOrder,
+  selectUser
 } from '@slices';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
+  const navigate = useNavigate();
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const constructorItems: TConstructorItems = useSelector<TConstructorItems>(
@@ -25,9 +29,14 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
-    const ingredients = constructorItems.ingredients.map((i) => i._id);
-    ingredients.push(constructorItems.bun._id);
-    dispatch(orderBurger(ingredients));
+
+    if (!user) {
+      navigate('/login');
+    } else {
+      const ingredients = constructorItems.ingredients.map((i) => i._id);
+      ingredients.push(constructorItems.bun._id);
+      dispatch(orderBurger(ingredients));
+    }
   };
   const closeOrderModal = () => {
     dispatch(clearOrder());
