@@ -12,7 +12,10 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
-
+import { useSelector, useDispatch } from '@store';
+import { fetchIngredients, selectIsLoading } from '@slices';
+import { useEffect } from 'react';
+import { Preloader } from '@ui';
 import {
   AppHeader,
   Modal,
@@ -22,9 +25,14 @@ import {
 } from '@components';
 
 const App = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, []);
 
   const onClose = () => {
     navigate(-1);
@@ -64,7 +72,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Детали ингредиента' onClose={onClose}>
+              <Modal title='' onClose={onClose}>
                 <IngredientDetails />
               </Modal>
             }
