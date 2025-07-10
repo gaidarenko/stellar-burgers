@@ -14,11 +14,17 @@ import { setCookie, deleteCookie } from '../../utils/cookie';
 type TUserState = {
   user: TUser | null;
   isLoading: boolean;
+  isLogging: boolean;
+  isUpdating: boolean;
+  isRegistering: boolean;
 };
 
 const initialState: TUserState = {
   user: null,
-  isLoading: false
+  isLoading: false,
+  isLogging: false,
+  isUpdating: false,
+  isRegistering: false
 };
 
 export const fetchUser = createAsyncThunk('user/get', async () => getUserApi());
@@ -105,42 +111,46 @@ export const userSlice = createSlice({
   reducers: {},
   selectors: {
     selectUser: (state) => state.user,
-    selectUserIsLoading: (state) => state.isLoading
+    selectUserIsLoading: (state) => state.isLoading,
+    selectUserIsLogging: (state) => state.isLogging,
+    selectUserIsUpdating: (state) => state.isUpdating,
+    selectUserIsRegistering: (state) => state.isRegistering
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLogging = true;
       })
       .addCase(loginUser.rejected, (state) => {
-        state.isLoading = false;
+        state.isLogging = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLogging = false;
         state.user = action.payload;
       })
       .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
+        state.isRegistering = true;
       })
       .addCase(registerUser.rejected, (state) => {
-        state.isLoading = false;
+        state.isRegistering = false;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isRegistering = false;
         state.user = action.payload;
       })
       .addCase(logoutUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLogging = true;
       })
       .addCase(logoutUser.rejected, (state) => {
-        state.isLoading = false;
+        state.isLogging = false;
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLogging = false;
         state.user = null;
       })
       .addCase(fetchUser.pending, (state) => {
         state.isLoading = true;
+        state.user = null;
       })
       .addCase(fetchUser.rejected, (state) => {
         state.isLoading = false;
@@ -150,16 +160,22 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
       })
       .addCase(updateUser.pending, (state) => {
-        state.isLoading = true;
+        state.isUpdating = true;
       })
       .addCase(updateUser.rejected, (state) => {
-        state.isLoading = false;
+        state.isUpdating = false;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isUpdating = false;
         state.user = action.payload;
       });
   }
 });
 
-export const { selectUser, selectUserIsLoading } = userSlice.selectors;
+export const {
+  selectUser,
+  selectUserIsLoading,
+  selectUserIsLogging,
+  selectUserIsUpdating,
+  selectUserIsRegistering
+} = userSlice.selectors;

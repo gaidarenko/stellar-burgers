@@ -2,13 +2,13 @@ import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useDispatch, useSelector } from '@store';
 import { Navigate } from 'react-router-dom';
-import { registerUser, selectUser, selectUserIsLoading } from '@slices';
+import { registerUser, selectUser, selectUserIsRegistering } from '@slices';
 import { TUser } from '@utils-types';
 import { Preloader } from '@ui';
 
 export const Register: FC = () => {
   const dispatch = useDispatch();
-  const isLoading: boolean = useSelector<boolean>(selectUserIsLoading);
+  const isLoading: boolean = useSelector<boolean>(selectUserIsRegistering);
   const user: TUser | null = useSelector<TUser | null>(selectUser);
 
   const [userName, setUserName] = useState('');

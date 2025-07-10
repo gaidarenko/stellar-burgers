@@ -6,7 +6,7 @@ import {
   fetchUser,
   updateUser,
   selectUser,
-  selectUserIsLoading
+  selectUserIsUpdating
 } from '@slices';
 import { Preloader } from '@ui';
 import { Navigate } from 'react-router-dom';
@@ -14,13 +14,8 @@ import { TRegisterData } from '@api';
 
 export const Profile: FC = () => {
   const user: TUser | null = useSelector<TUser | null>(selectUser);
-  const isLoading: boolean = useSelector<boolean>(selectUserIsLoading);
-
+  const isUpdating: boolean = useSelector<boolean>(selectUserIsUpdating);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, []);
 
   const [formValue, setFormValue] = useState({
     name: user?.name || '',
@@ -76,7 +71,7 @@ export const Profile: FC = () => {
     }));
   };
 
-  if (isLoading) {
+  if (isUpdating) {
     return <Preloader />;
   }
 
@@ -93,6 +88,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
-  return null;
 };
