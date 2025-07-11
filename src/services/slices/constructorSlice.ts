@@ -12,6 +12,11 @@ import {
 } from '@reduxjs/toolkit';
 import { orderBurgerApi } from '@api';
 
+type TMoveAction = {
+  index: number;
+  direction: number;
+};
+
 type TConstructorState = {
   constructorItems: TConstructorItems;
   orderRequest: boolean;
@@ -55,6 +60,20 @@ export const constructorSlice = createSlice({
           (i) => i.id !== action.payload
         );
     },
+    moveIngredient: (state, action: PayloadAction<TMoveAction>) => {
+      const index: number = action.payload.index;
+      const nextIndex = index + action.payload.direction;
+
+      if (
+        nextIndex >= 0 &&
+        nextIndex < state.constructorItems.ingredients.length
+      ) {
+        const temp = state.constructorItems.ingredients[index];
+        state.constructorItems.ingredients[index] =
+          state.constructorItems.ingredients[nextIndex];
+        state.constructorItems.ingredients[nextIndex] = temp;
+      }
+    },
     clearOrder: (state) => {
       state.order = null;
     }
@@ -81,7 +100,7 @@ export const constructorSlice = createSlice({
   }
 });
 
-export const { addIngredient, removeIngredient, clearOrder } =
+export const { addIngredient, removeIngredient, clearOrder, moveIngredient } =
   constructorSlice.actions;
 export const { selectConstructorItems, selectOrderRequest, selectOrder } =
   constructorSlice.selectors;

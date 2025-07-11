@@ -8,6 +8,8 @@ import { Preloader } from '@ui';
 
 export const Login: FC = () => {
   const location = useLocation();
+  const redirect = location.state?.location?.pathname;
+
   const dispatch = useDispatch();
   const isLoading: boolean = useSelector<boolean>(selectUserIsLogging);
   const user: TUser | null = useSelector<TUser | null>(selectUser);
@@ -28,7 +30,7 @@ export const Login: FC = () => {
   }
 
   if (user) {
-    return <Navigate to={location.state?.location?.pathname || '/'} />;
+    return <Navigate to={redirect || '/'} replace />;
   }
 
   return (

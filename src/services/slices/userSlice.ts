@@ -150,10 +150,10 @@ export const userSlice = createSlice({
       })
       .addCase(fetchUser.pending, (state) => {
         state.isLoading = true;
-        state.user = null;
       })
       .addCase(fetchUser.rejected, (state) => {
         state.isLoading = false;
+        state.user = null;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.isLoading = false;

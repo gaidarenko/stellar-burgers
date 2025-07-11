@@ -14,6 +14,7 @@ type TProtectedRoute = {
 export const ProtectedRoute = ({ children, onlyUnAuth }: TProtectedRoute) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const redirect = location.state?.location?.pathname;
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -31,7 +32,7 @@ export const ProtectedRoute = ({ children, onlyUnAuth }: TProtectedRoute) => {
   }
 
   if (onlyUnAuth && user) {
-    return <Navigate to='/' replace />;
+    return <Navigate to={redirect || '/'} replace />;
   }
 
   return children;

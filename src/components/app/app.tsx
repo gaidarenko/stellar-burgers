@@ -13,7 +13,7 @@ import '../../index.css';
 import styles from './app.module.css';
 import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from '@store';
-import { fetchIngredients, selectIsLoading } from '@slices';
+import { fetchIngredients, selectIsLoading, fetchUser } from '@slices';
 import { useEffect } from 'react';
 import { Preloader } from '@ui';
 import {
@@ -32,6 +32,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(fetchUser());
   }, []);
 
   const onClose = () => {
