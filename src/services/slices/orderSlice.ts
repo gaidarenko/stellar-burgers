@@ -90,3 +90,4 @@ export const {
   selectFeedTotal,
   selectFeedTotalToday
 } = orderSlice.selectors;
+export const { reducer } = orderSlice;
