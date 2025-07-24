@@ -60,5 +60,4 @@ describe('Модальные окна', () => {
     cy.get('[data-testid="modal"]')
       .should('not.exist')
   })
-
 })

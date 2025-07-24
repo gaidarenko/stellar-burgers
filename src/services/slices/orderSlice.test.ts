@@ -105,8 +105,6 @@ describe('Проверяем ingredient reducer', () => {
     expect(newState.totalToday).toBe(46);
   });
 
-  /****************************** */
-
   test('fetchOrders.pending', () => {
     const action = fetchOrders.pending('requestId'); 
     const newState = reducer(initialState, action);
@@ -143,8 +141,6 @@ describe('Проверяем ingredient reducer', () => {
     expect(newState.total).toBe(0);
     expect(newState.totalToday).toBe(0);
   });
-
-  /******************************** */
 
   test('getOrderByNumber.pending', () => {
     const action = getOrderByNumber.pending('requestId', 0); 
@@ -187,5 +183,4 @@ describe('Проверяем ingredient reducer', () => {
     expect(newState.total).toBe(0);
     expect(newState.totalToday).toBe(0);
   });
-
 });

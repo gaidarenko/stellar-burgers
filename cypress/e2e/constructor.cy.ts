@@ -59,6 +59,5 @@ describe('Конструктор бургеров', () => {
         cy.contains(main).should('exist');
         cy.contains(sauce).should('exist');
       });
-
   })
 })
