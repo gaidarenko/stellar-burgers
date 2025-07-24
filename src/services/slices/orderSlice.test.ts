@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { reducer, fetchFeeds, fetchOrders, getOrderByNumber } from './orderSlice';
+import { orderSlice, fetchFeeds, fetchOrders, getOrderByNumber } from './orderSlice';
 
 describe('Проверяем ingredient reducer', () => {
   const initialState = {
@@ -58,6 +58,8 @@ describe('Проверяем ingredient reducer', () => {
       number: 84951
     }    
   ];
+
+  const reducer = orderSlice.reducer;
 
   test('fetchFeeds.pending', () => {
     const action = fetchFeeds.pending('requestId'); 

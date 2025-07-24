@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { reducer, addIngredient, removeIngredient, clearOrder, moveIngredient } from './constructorSlice';
+import { constructorSlice, addIngredient, removeIngredient, clearOrder, moveIngredient } from './constructorSlice';
 
 describe('Проверяем constructor reducer', () => {
   const ban = {
@@ -52,6 +52,8 @@ describe('Проверяем constructor reducer', () => {
     orderRequest: false,
     order: null
   };
+
+  const reducer = constructorSlice.reducer;
 
   test('Добавление ингредиента', () => {
     // Сразу добавим все 3 типа ингредиентов и убедимся, что они правильно сохранились в зависимости от типа.

@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { reducer, fetchUser, loginUser, logoutUser, registerUser, updateUser } from './userSlice';
+import { userSlice, fetchUser, loginUser, logoutUser, registerUser, updateUser } from './userSlice';
 
 describe('Проверяем user reducer', () => {
 
@@ -26,6 +26,8 @@ describe('Проверяем user reducer', () => {
     email: 'email',
     password: 'password'
   }
+
+  const reducer = userSlice.reducer;
 
   test('fetchUser.pending', () => {
     const action = fetchUser.pending('requestId'); 

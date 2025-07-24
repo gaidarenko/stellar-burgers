@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { reducer, fetchIngredients } from './ingredientSlice';
+import { ingredientSlice, fetchIngredients } from './ingredientSlice';
 
 describe('Проверяем ingredient reducer', () => {
 
@@ -44,6 +44,8 @@ describe('Проверяем ingredient reducer', () => {
       image_large: "https://code.s3.yandex.net/react/code/sauce-02-large.png",
     }
   ];
+
+  const reducer = ingredientSlice.reducer;
 
   test('fetchIngredients.pending', () => {
     const initialState = {
