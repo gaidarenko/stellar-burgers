@@ -1,27 +1,9 @@
 import { SELECTOR_MODAL, SELECTOR_INGREDIENT_NAME, SELECTOR_INGREDIENT_TYPE_BUN } from './constants';
 
 describe('Заказ', () => {
-  beforeEach(() => {
-    cy.intercept('GET', '/api/ingredients', {
-      fixture: 'ingredients.json'
-    }).as('ingredients');
-
-    cy.intercept('GET', '/api/auth/user', {
-      fixture: 'user.json'
-    }).as('user');
-
-    cy.intercept('POST', '/api/orders', {
-      fixture: 'order.json'
-    }).as('order');
-
-    cy.setCookie('accessToken', 'accessToken');
-    localStorage.setItem('refreshToken', 'refreshToken');
-
-    cy.visit('/');
-    cy.wait('@ingredients');
-  });
-
   it('Создание заказа', () => {
+    cy.setup();
+
     cy.get(SELECTOR_INGREDIENT_TYPE_BUN)
       .first()
       .within(() => {
@@ -56,6 +38,5 @@ describe('Заказ', () => {
     cy.get('[data-testid="burger-top"]').should('not.exist');
     cy.get('[data-testid="burger-bottom"]').should('not.exist');
     cy.get('[data-testid="burger-no-middle"]').should('exist');
-
   })
 })

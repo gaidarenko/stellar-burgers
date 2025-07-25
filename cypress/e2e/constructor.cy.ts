@@ -2,16 +2,7 @@ import { SELECTOR_MODAL, SELECTOR_INGREDIENT_NAME, SELECTOR_INGREDIENT_TYPE_BUN 
 
 describe('Конструктор бургеров', () => {
   it('Ингредиенты добавляются в в конструктор', () => {
-    cy.intercept('GET', '/api/ingredients', {
-      fixture: 'ingredients.json'
-    }).as('ingredients');
-
-    cy.intercept('GET', '/api/auth/user', {
-      fixture: 'user.json'
-    }).as('user');
-
-    cy.visit('/');
-    cy.wait('@ingredients');
+    cy.setup();
 
     let bun = '';
     cy.get(SELECTOR_INGREDIENT_TYPE_BUN)

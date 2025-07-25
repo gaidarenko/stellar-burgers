@@ -35,3 +35,25 @@
 //     }
 //   }
 // }
+
+export function registerCommands() {
+  Cypress.Commands.add('setup', () => {
+    cy.intercept('GET', '/api/ingredients', {
+      fixture: 'ingredients.json'
+    }).as('ingredients');
+
+    cy.intercept('GET', '/api/auth/user', {
+      fixture: 'user.json'
+    }).as('user');
+
+    cy.intercept('POST', '/api/orders', {
+      fixture: 'order.json'
+    }).as('order');
+
+    cy.setCookie('accessToken', 'accessToken');
+    localStorage.setItem('refreshToken', 'refreshToken');
+
+    cy.visit('/');
+    cy.wait('@ingredients');
+  });
+}

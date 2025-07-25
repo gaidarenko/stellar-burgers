@@ -2,16 +2,7 @@ import { SELECTOR_MODAL, SELECTOR_INGREDIENT_NAME, SELECTOR_INGREDIENT_TYPE_BUN 
 
 describe('Модальные окна', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/ingredients', {
-      fixture: 'ingredients.json'
-    }).as('ingredients');
-
-    cy.intercept('GET', '/api/auth/user', {
-      fixture: 'user.json'
-    }).as('user');
-
-    cy.visit('/');
-    cy.wait('@ingredients');
+    cy.setup();
   });
 
   it('Открываются по клику на ингедиенте и закрываются по клику на Х', () => {
