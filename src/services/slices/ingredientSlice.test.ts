@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
-import { ingredientSlice, fetchIngredients } from './ingredientSlice';
+import { ingredientSlice, fetchIngredients, ingredientInitialState as initialState } from './ingredientSlice';
 
 describe('Проверяем ingredient reducer', () => {
 
@@ -48,11 +48,6 @@ describe('Проверяем ingredient reducer', () => {
   const reducer = ingredientSlice.reducer;
 
   test('fetchIngredients.pending', () => {
-    const initialState = {
-      data: [],
-      isLoading: false
-    };
-
     const action = fetchIngredients.pending('requestId'); 
     const newState = reducer(initialState, action);
 
@@ -61,26 +56,16 @@ describe('Проверяем ingredient reducer', () => {
   });
 
   test('fetchIngredients.rejected', () => {
-    const initialState = {
-      data: [],
-      isLoading: true
-    };
-
     const action = fetchIngredients.rejected(null, 'requestId'); 
-    const newState = reducer(initialState, action);
+    const newState = reducer({...initialState, isLoading: true}, action);
 
     expect(newState.isLoading).toBe(false);
     expect(newState.data).toHaveLength(0);
   });
 
   test('fetchIngredients.fulfilled', () => {
-    const initialState = {
-      data: [],
-      isLoading: true
-    };
-
     const action = fetchIngredients.fulfilled(mockIngredients, 'requestId'); 
-    const newState = reducer(initialState, action);
+    const newState = reducer({...initialState, isLoading: true}, action);
 
     expect(newState.isLoading).toBe(false);
     expect(newState.data).toEqual(mockIngredients);

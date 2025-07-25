@@ -1,16 +1,15 @@
 import { describe, test, expect } from '@jest/globals';
-import { userSlice, fetchUser, loginUser, logoutUser, registerUser, updateUser } from './userSlice';
+import {
+  userSlice,
+  fetchUser,
+  loginUser,
+  logoutUser,
+  registerUser,
+  updateUser,
+  userInitialState as initialState
+} from './userSlice';
 
 describe('Проверяем user reducer', () => {
-
-  const initialState = {
-    user: null,
-    isLoading: false,
-    isLogging: false,
-    isUpdating: false,
-    isRegistering: false
-  };
-
   const user = {
     email: 'email',
     name: 'name'

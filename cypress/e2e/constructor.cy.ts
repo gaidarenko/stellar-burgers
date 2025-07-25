@@ -1,3 +1,5 @@
+import { SELECTOR_MODAL, SELECTOR_INGREDIENT_NAME, SELECTOR_INGREDIENT_TYPE_BUN } from './constants';
+
 describe('Конструктор бургеров', () => {
   it('Ингредиенты добавляются в в конструктор', () => {
     cy.intercept('GET', '/api/ingredients', {
@@ -8,17 +10,17 @@ describe('Конструктор бургеров', () => {
       fixture: 'user.json'
     }).as('user');
 
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
     cy.wait('@ingredients');
 
     let bun = '';
-    cy.get('[data-testid="ingredient-type-bun"]')
+    cy.get(SELECTOR_INGREDIENT_TYPE_BUN)
       .first()
       .within(() => {
         cy.get('button').click();
       })
       .then(item => {
-        bun = item.find('[data-testid="ingredient-name"]').text();
+        bun = item.find(SELECTOR_INGREDIENT_NAME).text();
       });
 
     let main = '';
@@ -28,7 +30,7 @@ describe('Конструктор бургеров', () => {
         cy.get('button').click();
       })
       .then(item => {
-        main = item.find('[data-testid="ingredient-name"]').text();
+        main = item.find(SELECTOR_INGREDIENT_NAME).text();
       });
 
     let sauce = '';
@@ -38,7 +40,7 @@ describe('Конструктор бургеров', () => {
         cy.get('button').click();
       })
       .then(item => {
-        sauce = item.find('[data-testid="ingredient-name"]').text();
+        sauce = item.find(SELECTOR_INGREDIENT_NAME).text();
       });
 
     cy.get('[data-testid="burger-top"]')

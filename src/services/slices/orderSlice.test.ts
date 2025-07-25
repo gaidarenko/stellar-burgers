@@ -1,15 +1,13 @@
 import { describe, test, expect } from '@jest/globals';
-import { orderSlice, fetchFeeds, fetchOrders, getOrderByNumber } from './orderSlice';
+import {
+  orderSlice,
+  fetchFeeds,
+  fetchOrders,
+  getOrderByNumber,
+  orderInitialState as initialState
+} from './orderSlice';
 
 describe('Проверяем ingredient reducer', () => {
-  const initialState = {
-    userOrders: [],
-    feeds: [],
-    orders: [],
-    isLoading: false,
-    total: 0,
-    totalToday: 0
-  };
 
   const mockOrders = [
     {

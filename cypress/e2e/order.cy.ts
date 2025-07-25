@@ -1,3 +1,5 @@
+import { SELECTOR_MODAL, SELECTOR_INGREDIENT_NAME, SELECTOR_INGREDIENT_TYPE_BUN } from './constants';
+
 describe('Заказ', () => {
   beforeEach(() => {
     cy.intercept('GET', '/api/ingredients', {
@@ -15,12 +17,12 @@ describe('Заказ', () => {
     cy.setCookie('accessToken', 'accessToken');
     localStorage.setItem('refreshToken', 'refreshToken');
 
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
     cy.wait('@ingredients');
   });
 
   it('Создание заказа', () => {
-    cy.get('[data-testid="ingredient-type-bun"]')
+    cy.get(SELECTOR_INGREDIENT_TYPE_BUN)
       .first()
       .within(() => {
         cy.get('button').click();
@@ -41,7 +43,7 @@ describe('Заказ', () => {
     cy.get('[data-testid="make-order"]').click();
     cy.wait('@order');
 
-    cy.get('[data-testid="modal"]')
+    cy.get(SELECTOR_MODAL)
       .should('exist')
       .should('be.visible')
       .within(() => {
@@ -50,7 +52,7 @@ describe('Заказ', () => {
         cy.get('[data-testid="modal-close"]').click();
       });
 
-    cy.get('[data-testid="modal"]').should('not.exist');
+    cy.get(SELECTOR_MODAL).should('not.exist');
     cy.get('[data-testid="burger-top"]').should('not.exist');
     cy.get('[data-testid="burger-bottom"]').should('not.exist');
     cy.get('[data-testid="burger-no-middle"]').should('exist');

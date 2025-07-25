@@ -1,5 +1,11 @@
 import { describe, test, expect } from '@jest/globals';
-import { constructorSlice, addIngredient, removeIngredient, clearOrder, moveIngredient } from './constructorSlice';
+import {
+  constructorSlice,
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+  constructorInitialState as initialState
+} from './constructorSlice';
 
 describe('Проверяем constructor reducer', () => {
   const ban = {
@@ -42,15 +48,6 @@ describe('Проверяем constructor reducer', () => {
     image: "https://code.s3.yandex.net/react/code/sauce-02.png",
     image_mobile: "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
     image_large: "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-  };
-
-  const initialState = {
-    constructorItems: {
-      bun: null,
-      ingredients: []
-    },
-    orderRequest: false,
-    order: null
   };
 
   const reducer = constructorSlice.reducer;
