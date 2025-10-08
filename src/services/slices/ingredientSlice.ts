@@ -41,3 +41,4 @@ export const ingredientSlice = createSlice({
 });
 
 export const { selectIngredients, selectIsLoading } = ingredientSlice.selectors;
+export { initialState as ingredientInitialState };

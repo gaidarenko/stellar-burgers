@@ -104,3 +104,4 @@ export const { addIngredient, removeIngredient, clearOrder, moveIngredient } =
   constructorSlice.actions;
 export const { selectConstructorItems, selectOrderRequest, selectOrder } =
   constructorSlice.selectors;
+export { initialState as constructorInitialState };

@@ -179,3 +179,4 @@ export const {
   selectUserIsUpdating,
   selectUserIsRegistering
 } = userSlice.selectors;
+export { initialState as userInitialState };
